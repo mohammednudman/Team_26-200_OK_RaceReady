@@ -21,6 +21,3 @@ mongoose.connection.on("error", (err) => {
     "mongoErrLog.log",
   );
 });
-
-
-mongoose.set('debug', true);

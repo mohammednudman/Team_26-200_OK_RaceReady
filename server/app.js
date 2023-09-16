@@ -7,10 +7,10 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 //Internal Imports
-const { logger } = require("./middlewares/logger");
+const {logger} = require("./middlewares/logger");
 const corsOptions = require("./config/corsOptions");
 const errorHandler = require("./middlewares/errorHandler");
-const connectDB = require("./config/mongoDbConfig.js");
+const {connectDB} = require("./config/mongoDbConfig.js");
 const client = require("./config/redisConfig");
 
 const app = express();
@@ -25,12 +25,12 @@ app.use(cookieParser());
 app.use(morgan("tiny"));
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 //Routes
 app.use("/api", require("./routes/indexRouter"));
-app.use("/api", require("./routes/registerRoute"));
-app.use('/auth',require('./routes/authRoutes'));
+
+app.use('/auth', require('./routes/loginRoutes'));
 
 app.use(errorHandler);
 module.exports = app;
