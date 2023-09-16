@@ -4,7 +4,8 @@ const {
   storeUserBMI,
   addStopTimeOfHackathon,
   addParticipantsToEventParticipants,
-  updateUserToken
+  updateUserToken,
+  getParticipantData,
 } = require("../controllers/participantController.js");
 
 // Define routes for getting all events and a single event by ID
@@ -13,6 +14,7 @@ participantRoutes.route("/:userId/stop-time").post(addStopTimeOfHackathon);
 participantRoutes
   .route("/:eventId/add-participant/:userId")
   .post(addParticipantsToEventParticipants);
-participantRoutes.route("/:userId").post(updateUserToken);
+participantRoutes.route("/token/:userId").post(updateUserToken);
+participantRoutes.route("/:userId").get(getParticipantData);
 
 module.exports = participantRoutes;

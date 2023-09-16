@@ -35,6 +35,21 @@ const addVolunteerToEventParticipants = asyncHandler(async (req, res) => {
   }
 });
 
+// Controller to find all events where a user has volunteered
+const findEventsVolunteeredByUser = async (req, res) => {
+  const { userId } = req.params; // Assuming you pass the user's ID in the URL
+
+  try {
+    // Find events where the user's ID is in the volunteers array
+    const events = await Event.find({ volunteers: userId });
+    res.status(200).json(events);
+  } catch (error) {
+    console.error("Error finding events volunteered by user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   addVolunteerToEventParticipants,
+  findEventsVolunteeredByUser,
 };
