@@ -6,7 +6,8 @@ indexRouter.use("/register", require("./registerRoutes"));
 indexRouter.use("/login", require("./loginRoutes"));
 indexRouter.use("/events", require("./eventRoutes"));
 indexRouter.use("/admin", require("./adminRoutes"));
+indexRouter.use("/participant", require("./participantRoutes"));
+indexRouter.use("/volunteer", require("./volunteerRoutes"));
 indexRouter.use("/payment", require("./paymentRoute"));
-indexRouter.use("/user", require("./participantRoutes"));
 
 module.exports = indexRouter;
