@@ -35,4 +35,6 @@ const addVolunteerToEventParticipants = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { addVolunteerToEventParticipants };
+module.exports = {
+  addVolunteerToEventParticipants,
+};

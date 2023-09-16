@@ -1,7 +1,7 @@
 const express = require("express");
 const {
-  addParticipantsToEventParticipants,
-} = require("../controllers/participantController");
+  addVolunteerToEventParticipants,
+} = require("../controllers/volunteerController");
 const volunteerRoutes = express.Router();
 
 volunteerRoutes
