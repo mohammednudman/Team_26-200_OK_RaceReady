@@ -9,5 +9,6 @@ adminRouter.route("/total-revenue").get(adminController.getTotalRevenue);
 adminRouter.route("/add-event").post(adminController.addNewEvent);
 adminRouter.route("/event-info").get(adminController.eventInfo);
 adminRouter.route("/getVolunteers").get(adminController.getVolunteers);
+adminRouter.route("/send-notifications").get(adminController.sendNotifications);
 
 module.exports =adminRouter;

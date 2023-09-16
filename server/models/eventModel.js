@@ -30,7 +30,6 @@ const eventSchema = new mongoose.Schema({
       },
     },
   ],
-
   refreshmentHalts: [
     {
       type: String,
@@ -61,7 +60,15 @@ const eventSchema = new mongoose.Schema({
       type: String,
     },
   ],
+
+  marathonType: [
+    {
+      type: Number
+    }
+  ],
+
   registrationDeadline: Date,
+
 });
 
 const Event = mongoose.model("Event", eventSchema);
