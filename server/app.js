@@ -29,9 +29,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Routes
 app.use("/api", require("./routes/indexRouter"));
-app.use("/api", require("./routes/registerRoute"));
-app.use("/api",require("./routes/"));
+app.use("/api", require("./routes/registerRoutes"));
 app.use('/auth',require('./routes/authRoutes'));
+app.use('/admin',require('./routes/adminRoutes'));
 
 app.use(errorHandler);
 module.exports = app;
