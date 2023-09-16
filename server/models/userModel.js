@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  weight: {
+    type: Number
+  },
+  height: {
+    type: Number
+  },
   bmi: Number
 });
 

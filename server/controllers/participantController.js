@@ -16,6 +16,8 @@ const storeUserBMI = asyncHandler(async (req, res) => {
 
     user.bmi = bmi;
     user.gender = gender;
+    user.height = height;
+    user.weight = weight;
     await user.save();
 
     res.status(200).json({ message: "BMI updated successfully" });
@@ -27,7 +29,8 @@ const storeUserBMI = asyncHandler(async (req, res) => {
 
 const addStopTimeOfHackathon = asyncHandler(async (req, res) => {
   const { userId } = req.params; // Assuming you pass the user's ID in the URL
-  const timestamp = new Date(); // Create a new timestamp
+  const { eventId, marathonType, timestamp } = req.body;
+
 
   try {
     // Find the user by ID
@@ -36,7 +39,14 @@ const addStopTimeOfHackathon = asyncHandler(async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Add the new timestamp to the timestamps array
-    user.timestamps.push(timestamp);
+
+    const newPerformance = {
+      eventId: eventId,
+      marathonType: marathonType,
+      timestamp: timestamp,
+    };
+    user.performance.push(newPerformance);
+
 
     // Save the updated user document
     await user.save();
@@ -105,6 +115,25 @@ const updateUserToken = async (req, res) => {
 
 const getParticipantData = asyncHandler(async (req, res) => {
   const { userID } = req.params;
+  try {
+    const participant = await User.findOne({ _id: userID });
+    if (!participant) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    let totalTimestamp = 0, totalDistance = 0;
+    participant.performance.forEach(p => {
+      totalTimestamp += p.timestamp;
+      totalDistance += p.distance;
+    });
+
+    const steps = 1200 * totalDistance;
+    const calorie = 3.9 * participant.weight * totalTimestamp;
+
+  } catch (error) {
+    console.error("Error updating token:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 module.exports = {
