@@ -77,8 +77,26 @@ const addParticipantsToEventParticipants = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = {
-  storeUserBMI,
-  addStopTimeOfHackathon,
-  addParticipantsToEventParticipants,
+const updateUserToken = async (req, res) => {
+  const { userID } = req.params; 
+  const { token } = req.body;
+
+  try {
+    const user = await User.findOne({ _id: userID });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    user.token = token;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Token updated successfully' });
+  } catch (error) {
+    console.error('Error updating token:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
+
+
+module.exports = { storeUserBMI, addStopTimeOfHackathon,updateUserToken, addParticipantsToEventParticipants };
