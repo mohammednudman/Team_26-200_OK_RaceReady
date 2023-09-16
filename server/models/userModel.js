@@ -31,14 +31,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  token:{
-    type: String
+  token: {
+    type: String,
   },
   role: {
     type: String,
     required: true,
   },
   bmi: Number,
+  gender: String,
   timestamps: [{ type: Date }],
 });
 

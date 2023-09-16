@@ -7,7 +7,7 @@ const {
   volunteerLogin,
 } = require("../controllers/loginController");
 
-loginRouter.route("/pariticipant").post(participantLogin);
+loginRouter.route("/participant").post(participantLogin);
 loginRouter.route("/volunteer").post(volunteerLogin);
 
 module.exports = loginRouter;
