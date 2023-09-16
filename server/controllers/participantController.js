@@ -2,20 +2,25 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
 const storeUserBMI = asyncHandler(async (req, res) => {
-  const { height, weight } = req.body;
+  const { height, weight, gender } = req.body;
   const bmi = weight / (height * height);
+
   const { userId } = req.params;
 
   try {
     const user = await User.findById(userId);
 
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     user.bmi = bmi;
+    user.gender = gender;
     await user.save();
 
     res.status(200).json({ message: "BMI updated successfully" });
   } catch (error) {
+    console.error("Error updating BMI:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -44,7 +49,7 @@ const addStopTimeOfHackathon = asyncHandler(async (req, res) => {
 });
 
 // Controller to add a user to the participants array of an event
-const addParticipantsToEventParticipants = asyncHandler(async (req, res) => {
+const addParticipantsToEventAttendee = asyncHandler(async (req, res) => {
   const { eventId, userId } = req.params; // Assuming you pass the event ID and user ID in the URL
 
   try {
@@ -78,25 +83,33 @@ const addParticipantsToEventParticipants = asyncHandler(async (req, res) => {
 });
 
 const updateUserToken = async (req, res) => {
-  const { userID } = req.params; 
+  const { userID } = req.params;
   const { token } = req.body;
 
   try {
     const user = await User.findOne({ _id: userID });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     user.token = token;
 
     await user.save();
 
-    res.status(200).json({ message: 'Token updated successfully' });
+    res.status(200).json({ message: "Token updated successfully" });
   } catch (error) {
-    console.error('Error updating token:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error updating token:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
+const getParticipantData = asyncHandler(async (req, res) => {
+  const { userID } = req.params;
+});
 
-module.exports = { storeUserBMI, addStopTimeOfHackathon,updateUserToken, addParticipantsToEventParticipants };
+module.exports = {
+  storeUserBMI,
+  addStopTimeOfHackathon,
+  updateUserToken,
+  addParticipantsToEventParticipants: addParticipantsToEventAttendee,
+};
