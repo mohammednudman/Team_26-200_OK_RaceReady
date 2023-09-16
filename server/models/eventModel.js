@@ -6,6 +6,7 @@ const eventSchema = new mongoose.Schema({
     required: true,
   },
   
+  
   eventStartDate: {
     type: Date,
     required: true,
@@ -14,9 +15,42 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  latitude:Number,
-  longitude:Number,
+  startingPoint: {
+    latitude: Number,
+    longitude: Number,
+  },
+  endingPoint: {
+    latitude: Number,
+    longitude: Number,
+  },
+  firstAidHalts: [
+    {
+      type: String,
+      location: {
+        latitude: Number,
+        longitude: Number,
+      },
+    },
+  ],
+
+  refreshmentHalts: [
+    {
+      type: String,
+      location: {
+        latitude: Number,
+        longitude: Number,
+      },
+    },
+  ],
   description: String,
+  participants:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
+  volunteers:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  },
   organizer: {
     type: String,
   },
