@@ -1,4 +1,4 @@
-const {mongoose} = require('../config/mongoDbConfig.js')
+const { mongoose } = require("../config/mongoDbConfig.js");
 
 const eventSchema = new mongoose.Schema({
   eventName: {
@@ -12,16 +12,16 @@ const eventSchema = new mongoose.Schema({
   location: String,
   description: String,
   organizer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
   },
-  sponsors: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sponsor',
-  }],
+  sponsors: [
+    {
+      type: String,
+    },
+  ],
   registrationDeadline: Date,
 });
 
-const Event = mongoose.model('Event', eventSchema);
+const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
