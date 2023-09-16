@@ -35,6 +35,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bmi: Number,
+  timestamps: [{ type: Date }],
 });
 
 const User = mongoose.model("User", userSchema);
