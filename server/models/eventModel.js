@@ -41,15 +41,15 @@ const eventSchema = new mongoose.Schema({
     },
   ],
   description: String,
-  participants:{
+  participants:[{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
-  },
-  volunteers:{
+  }],
+  volunteers:[{
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
-  },
-  
+  }],
+
   organizer: {
     type: String,
   },
