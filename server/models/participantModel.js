@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const {mongoose} = require('../config/mongoDbConfig.js')
 
 const participantSchema = new mongoose.Schema({
   event: {
