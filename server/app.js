@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const { logger } = require("./middlewares/logger");
 const corsOptions = require("./config/corsOptions");
 const errorHandler = require("./middlewares/errorHandler");
-const connectDB = require("./config/mongoDbConfig.js");
+const {connectDB} = require("./config/mongoDbConfig.js");
 const client = require("./config/redisConfig");
 
 const app = express();
