@@ -51,6 +51,7 @@ const eventInfo=async(req,res)=>{
 
 const getVolunteers = async (req, res) => {
   try {
+
     const role="volunteer";
     const volunteer= await User.countDocuments({role});
     res.json(volunteer);
@@ -59,4 +60,38 @@ const getVolunteers = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-module.exports = { getTotalEventCount,getTotalRegistrations,getTotalRevenue,addNewEvent,eventInfo,getVolunteers};
+
+const sendNotifications=async (req, res) => {
+  try{
+    // take notification title and body from req.body
+    const {title, body} = req.body;
+    const usersWithToken = await User.find({token:{$exists:true, $ne: null}});
+
+
+    const message = {
+      data: {
+        title: title,
+        body: body,
+        token:token,
+      },
+    };
+
+     const sendPromises = usersWithToken.map(async (user) => {
+      try {
+        admin.messaging().send(message).then((response) => {
+        console.log("Successfully sent message:", response)});  
+      }
+      catch(error) {
+        console.error(`Error sending notification to user with token ${user.token}:`, error);
+      }
+      });
+
+      await Promise.all(sendPromises);//band
+
+  }catch(error){
+        console.error('Error sending notifications:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+  };
+
+module.exports = { getTotalEventCount,getTotalRegistrations,getTotalRevenue,addNewEvent,eventInfo,getVolunteers,sendNotifications};
