@@ -14,6 +14,26 @@ import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import BarChartComponent from "../../components/BarChartComponent"
 import LineChartComponent from "../../components/LineChartComponent"
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+
+const YourComponent = ({ endpoint, setTitle }) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/total-registrations");
+        setTitle(response.data.totalRegistrations);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [setTitle, endpoint]);
+
+  return null;
+}
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -68,6 +88,11 @@ const Dashboard = () => {
             }
           />
         </Box>
+
+        <YourComponent
+        endpoint="/total-registrations"
+        setTitle={setTotalRegistrations}
+      />
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -75,8 +100,23 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="431,225"
+            {/* return ( */}
+              <div>
+                {title && (
+                  <StatBox
+                    title={totalRegistrations.toString()}
+                    subtitle="Total Registrations"
+                    progress="0.50"
+                    increase="+21%"
+                    icon={<PointOfSaleIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />}
+                  />
+                )}
+              </div>
+            {/* ); */}
+          {/* }; */}
+
+          {/* <StatBox
+            title={title}
             subtitle="Total Registrations"
             progress="0.50"
             increase="+21%"
@@ -85,7 +125,7 @@ const Dashboard = () => {
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
-          />
+          /> */}
         </Box>
         <Box
           gridColumn="span 3"
