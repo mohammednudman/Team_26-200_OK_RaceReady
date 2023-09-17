@@ -56,7 +56,7 @@ const ParticipantSignup = () => {
             }
 
             alert("Registered Successfully")
-            navigation.navigate("PStarter1")
+            navigation.navigate("ParticipantLogin")
 
             setCity('')
             setPhoneNumber('')

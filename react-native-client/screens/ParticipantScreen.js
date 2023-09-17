@@ -12,10 +12,9 @@ import * as Localization from 'expo-localization';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useLanguage } from '../LanguageContext';
 import { translations } from '../translations';
-import ELearning from './ELearning';
 import Timer from '../components/Timer';
 import { useMarathonContext } from '../MarathonContext';
-
+import Events from "../screens/Events"
 
 
 
@@ -24,8 +23,6 @@ const i18n = new I18n(translations);
 i18n.locale = Localization.locale;
 
 i18n.enableFallback = true;
-
-
 
 
 
@@ -40,14 +37,12 @@ const ParticipantScreen = () => {
   const [linkOptions, setLinkOptions] = useState({
     home: true,
     search: false,
-    elearning: false,
+    events: false,
     profile: false
   })
   const navigation = useNavigation();
   const slideValue = new Animated.Value(0);
   const { languageSelected, setLanguageSelected } = useLanguage();
-
-
 
 
   const ListOptions = [
@@ -141,7 +136,7 @@ const ParticipantScreen = () => {
       >
         {linkOptions.home == true && (
 
-          <SafeAreaView style={{ paddingRight: 20, paddingLeft: 20, paddingTop: 10, backgroundColor: '#4d7c0f', flex: 1, paddingBottom: 160 }}>
+          <SafeAreaView style={{ paddingRight: 20, paddingLeft: 20, paddingTop: 10, backgroundColor: '#fcd34d', flex: 1, paddingBottom: 160 }}>
 
             <View style={{ padding: 10, borderRadius: 20, alignItems: 'center', justifyContent: 'space-between', display: 'flex', flexDirection: 'row', backgroundColor: 'white' }}>
 
@@ -245,21 +240,20 @@ const ParticipantScreen = () => {
             <ExploreTopics />
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
-              <Text style={{ color: 'white', fontSize: 30, fontFamily: 'dm-bold' }}>{i18n.t('Communities')}</Text>
+              <Text style={{ color: 'white', fontSize: 30, fontFamily: 'dm-bold' }}>Communities</Text>
               <Text style={{ color: 'white', fontSize: 15, fontFamily: 'dm', textDecorationLine: "underline" }}>{i18n.t('View all')}</Text>
-
             </View>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-                <TouchableOpacity>
+              <TouchableOpacity>
                   <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginRight: 20, borderRadius: 20, paddingBottom: 10, backgroundColor: '#dcfce7' }}>
                     <Image
-                      source={require('../assets/community-4.jpg')}
+                      source={require('../assets/community-2.jpg')}
                       resizeMode="cover"
                       style={{ width: 200, height: 230, borderRadius: 20, }}
                     />
-                    <Text style={{ fontSize: 25, fontFamily: 'dm', marginTop: 10 }}>Runners of Mumbai</Text>
+                    <Text style={{ fontSize: 25, fontFamily: 'dm', marginTop: 10 }}>Mumbai Elite</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -293,7 +287,7 @@ const ParticipantScreen = () => {
       </ScrollView>
 
       {linkOptions.search == true && <Search />}
-      {linkOptions.elearning == true && <ELearning />}
+      {linkOptions.events == true && <Events />}
 
 
 
@@ -304,7 +298,7 @@ const ParticipantScreen = () => {
           <TouchableOpacity onPress={() => setLinkOptions({
             home: true,
             search: false,
-            elearning: false,
+            events: false,
             profile: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -320,7 +314,7 @@ const ParticipantScreen = () => {
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: true,
-            elearning: false,
+            events: false,
             profile: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -329,28 +323,28 @@ const ParticipantScreen = () => {
                 resizeMode="contain"
                 style={[styles.icon, { tintColor: linkOptions.search == true ? 'blue' : 'black' }]}
               />
-              <Text style={{ color: linkOptions.search == true ? 'blue' : 'black' }}>{i18n.t('Search')}</Text>
+              <Text style={{ color: linkOptions.search == true ? 'blue' : 'black' }}>Search</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: false,
-            elearning: true,
+            events: true,
             profile: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <Image
-                source={require('../assets/learning.png')}
+                source={require('../assets/events.png')}
                 resizeMode="contain"
-                style={[styles.icon, { tintColor: linkOptions.elearning == true ? 'blue' : 'black' }]}
+                style={[styles.icon, { tintColor: linkOptions.events == true ? 'blue' : 'black' }]}
               />
-              <Text style={{ color: linkOptions.elearning == true ? 'blue' : 'black' }}>{i18n.t('E-Learning')}</Text>
+              <Text style={{ color: linkOptions.events == true ? 'blue' : 'black' }}>Events</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: false,
-            elearning: false,
+            events: false,
             profile: true
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>

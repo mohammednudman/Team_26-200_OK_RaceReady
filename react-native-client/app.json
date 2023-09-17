@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RaceReady",
-    "slug": "RaceReady",
+    "name": "Race Ready",
+    "slug": "raceready",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,10 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "6505d9a4df7d3462686f30d1"
+      },
       "supportsTablet": true
     },
     "android": {
@@ -22,9 +23,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "CALL_PHONE"
-      ]
+      "permissions": ["CALL_PHONE", "NOTIFICATIONS"],
+      "config": {
+        "googleMaps": {
+          "apiKey": "6505d9a4df7d3462686f30d1"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
