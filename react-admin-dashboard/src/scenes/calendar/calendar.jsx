@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
-import {MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet';
-import {Icon} from 'leaflet'; // Import Icon from leaflet
-import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { Icon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import axios from 'axios';
+// import {}
+
 
 const Calender = () => {
     const [formData, setFormData] = useState({
@@ -24,6 +27,7 @@ const Calender = () => {
         '42km': false,
     });
 
+
     const handleCheckboxChange = (distance) => {
         setDistances((prevDistances) => ({
             ...prevDistances,
@@ -31,6 +35,29 @@ const Calender = () => {
         }));
     };
 
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Filter out distances that are not selected
+            const selectedDistances = Object.keys(distances).filter(key => distances[key]);
+            // Combine the form data with selected distances and water facility data
+            const eventData = {
+                ...formData,
+                distances: selectedDistances,
+                // refreshmentHalts: refreshmentHalts.map(spot => ({
+                //     latitude: spot.latitude,
+                //     longitude: spot.longitude
+                // }))
+            };
+            console.log(eventData);
+            // Send a POST request to your server with event details
+            const response = await axios.post(`${URL}/add-event`, eventData);
+            // Handle the response as needed
+            console.log('Event details sent successfully:', response.data);
+        } catch (error) {
+            console.error('Error sending event details:', error);
+        }
+    };
     const redIcon = new Icon({
         // iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x-red.png',
         // shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
@@ -46,34 +73,34 @@ const Calender = () => {
     const [endPoint, setEndPoint] = useState(null);
 
     const handleInputChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const [waterFacilitySpots, setWaterFacilitySpots] = useState([
-        {id: 1, name: 'Spot 1', latitude: 19.0762, longitude: 72.8787},
-        {id: 2, name: 'Spot 2', latitude: 19.0759, longitude: 72.8775},
+        { id: 1, name: 'Spot 1', latitude: 19.0762, longitude: 72.8787 },
+        { id: 2, name: 'Spot 2', latitude: 19.0759, longitude: 72.8775 },
         // Add more spots as needed
     ]);
 
     const MapClickHandler = () => {
         const map = useMapEvents({
             click(e) {
-                const {lat, lng} = e.latlng;
+                const { lat, lng } = e.latlng;
 
                 if (isUpdatingStart) {
-                    setFormData({...formData, startLatitude: lat.toFixed(6), startLongitude: lng.toFixed(6)});
+                    setFormData({ ...formData, startLatitude: lat.toFixed(6), startLongitude: lng.toFixed(6) });
                 } else {
-                    setFormData({...formData, endLatitude: lat.toFixed(6), endLongitude: lng.toFixed(6)});
+                    setFormData({ ...formData, endLatitude: lat.toFixed(6), endLongitude: lng.toFixed(6) });
                 }
 
                 // Toggle the flag for the next click
                 setIsUpdatingStart(!isUpdatingStart);
 
                 if (!startPoint) {
-                    setStartPoint({lat, lng});
+                    setStartPoint({ lat, lng });
                 } else if (!endPoint) {
-                    setEndPoint({lat, lng});
+                    setEndPoint({ lat, lng });
                 }
             },
         });
@@ -104,22 +131,22 @@ const Calender = () => {
     });
 
     return (
-        <div style={{padding: '20px'}}>
+        <div style={{ padding: '20px' }}>
             <h2>Event Details</h2>
             {/* ...Other input fields */}
 
 
             {/* return ( */}
             <div>
-                <p>Enter the title of the event</p><input type="text" placeholder="Title" style={inputStyle}/>
+                <p>Enter the title of the event</p><input type="text" placeholder="Title" style={inputStyle} />
                 <p>Enter the registration fees for the event</p><input type="text" placeholder="Fees"
-                                                                       style={inputStyle}/>
-                <p>Enter the date of the event</p><input type="date" style={inputStyle}/>
-                <p>Enter the city where the event</p><input type="text" placeholder="City" style={inputStyle}/>
-                <p>Enter the place where the event</p><input type="text" placeholder="Place" style={inputStyle}/>
+                    style={inputStyle} />
+                <p>Enter the date of the event</p><input type="date" style={inputStyle} />
+                <p>Enter the city where the event</p><input type="text" placeholder="City" style={inputStyle} />
+                <p>Enter the place where the event</p><input type="text" placeholder="Place" style={inputStyle} />
                 <p>Enter the name of the sponsor who is going to sponsor the event</p><input type="text"
-                                                                                             placeholder="Sponsor"
-                                                                                             style={inputStyle}/>
+                    placeholder="Sponsor"
+                    style={inputStyle} />
                 {/* Add your map component here */}
             </div>
             <div>
@@ -170,18 +197,18 @@ const Calender = () => {
       </div> */}
             <p>Enter the longitudes and latitudes for the start point</p>
             <input type="text" name="startLatitude" placeholder="Start Latitude" value={formData.startLatitude}
-                   onChange={handleInputChange} style={inputStyle}/>
+                onChange={handleInputChange} style={inputStyle} />
             <input type="text" name="startLongitude" placeholder="Start Longitude" value={formData.startLongitude}
-                   onChange={handleInputChange} style={inputStyle}/>
+                onChange={handleInputChange} style={inputStyle} />
             <p>Enter the longitudes and latitudes for the end point</p>
             <input type="text" name="endLatitude" placeholder="End Latitude" value={formData.endLatitude}
-                   onChange={handleInputChange} style={inputStyle}/>
+                onChange={handleInputChange} style={inputStyle} />
             <input type="text" name="endLongitude" placeholder="End Longitude" value={formData.endLongitude}
-                   onChange={handleInputChange} style={inputStyle}/>
+                onChange={handleInputChange} style={inputStyle} />
 
-            <div style={{marginTop: '20px', height: '400px'}}>
-                <MapContainer center={[19.0760, 72.8777]} zoom={13} style={{height: '100%', width: '100%'}}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+            <div style={{ marginTop: '20px', height: '400px' }}>
+                <MapContainer center={[19.0760, 72.8777]} zoom={13} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {startPoint && (
                         <Marker position={startPoint} icon={redIcon}>
                             <Popup>Start Point</Popup>
@@ -200,9 +227,23 @@ const Calender = () => {
                         </Marker>
                     ))}
 
-                    <MapClickHandler/>
+                    <MapClickHandler />
                 </MapContainer>
+
             </div>
+            <button onClick={handleFormSubmit}
+                style={{
+                    backgroundColor: 'blue',      // Background color
+                    color: 'white',               // Text color
+                    padding: '10px 20px',         // Padding
+                    borderRadius: '5px',          // Border radius
+                    border: 'none',               // Remove default border
+                    cursor: 'pointer',            // Cursor style on hover
+                    fontSize: '16px',             // Font size
+                    fontWeight: 'bold',           // Font weight
+                }}>
+                Create Event
+            </button>
         </div>
     );
 };
