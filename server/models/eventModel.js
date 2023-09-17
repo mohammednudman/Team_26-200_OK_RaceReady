@@ -5,14 +5,16 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  eventStartDate: {
+  eventDate: {
     type: Date,
     required: true,
   },
-  eventEndDate: {
-    type: Date,
-    required: true,
-  },
+  // eventEndDate: {
+  //   type: Date,
+  //   required: true,
+  // },
+  city: String,
+  place: String,
   startingPoint: {
     latitude: Number,
     longitude: Number,
@@ -66,6 +68,7 @@ const eventSchema = new mongoose.Schema({
       type: Number
     }
   ],
+  fees: Number,
 
   registrationDeadline: Date,
 

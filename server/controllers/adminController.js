@@ -57,17 +57,59 @@ const getTotalRevenue = async (req, res) => {
   //payments to be integrated
 };
 
+// const addNewEvent = async (req, res) => {
+//   try {
+//     const eventData = req.body;
+//     const newEvent = new Event(eventData);
+//     await newEvent.save();
+//     res.status(201).json({ message: "Event added successfully" });
+//   } catch (error) {
+//     console.error("Error adding event:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
 const addNewEvent = async (req, res) => {
   try {
-    const eventData = req.body;
-    const newEvent = new Event(eventData);
+    // Extract event data from the request body
+    const {
+      eventName,
+      eventDate,
+      city,
+      place,
+      startingPoint,
+      endingPoint,
+      sponsors,
+      fees,
+    } = req.body;
+
+    // Create a new Event document
+    const newEvent = new Event({
+      eventName,
+      eventDate: new Date(eventDate), // Convert eventDate to a Date object
+      city,
+      place,
+      startingPoint,
+      endingPoint,
+      sponsors,
+      fees,
+    });
+
+    console.log(newEvent);
+
+    // Save the new event to the database
     await newEvent.save();
-    res.status(201).json({ message: "Event added successfully" });
+
+    res.status(201).json({ message: 'Event added successfully', event: newEvent });
   } catch (error) {
-    console.error("Error adding event:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error adding event:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+
 
 const eventInfo = async (req, res) => {
   try {
