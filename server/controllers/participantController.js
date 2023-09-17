@@ -128,7 +128,7 @@ const getParticipantData = asyncHandler(async (req, res) => {
     });
 
     const steps = 1200 * totalDistance;
-    const calorie = 3.9 * participant.weight * totalTimestamp;
+    const calorie = 3.9 * participant.weight * totalTimes66666tamp;
 
   } catch (error) {
     console.error("Error updating token:", error);
