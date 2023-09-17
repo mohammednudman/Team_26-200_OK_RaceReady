@@ -9,9 +9,8 @@ const ChatHeading = props => {
           style={styles.profilePic}
           source={require('../assets/chatbot.png')}
         />
-        <Text style={styles.user}>{props.user}</Text>
+        <Text style={styles.user}>Chats</Text>
       </View>
-      <Text style={styles.LastText}>{props.LastText}</Text>
     </View>
   );
 };
@@ -22,10 +21,8 @@ const styles = StyleSheet.create({
   root: {
     flexDirection: 'column',
     height: 70,
-    borderRadius: 10,
-    borderColor: '#000',
-    borderWidth: 0.2,
     margin: 5,
+    padding: 20
   },
 
   heading: {
@@ -41,7 +38,7 @@ const styles = StyleSheet.create({
   },
 
   user: {
-    fontSize: 17,
+    fontSize: 30,
     fontWeight: 'bold',
     marginLeft: 15,
     marginRight: 5,
