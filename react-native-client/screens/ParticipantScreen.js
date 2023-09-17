@@ -15,6 +15,7 @@ import { translations } from '../translations';
 import Timer from '../components/Timer';
 import { useMarathonContext } from '../MarathonContext';
 import Events from "../screens/Events"
+import * as Font from 'expo-font';
 
 
 
@@ -24,9 +25,15 @@ i18n.locale = Localization.locale;
 
 i18n.enableFallback = true;
 
-
+let customFonts = {
+  'dm': require('../assets/fonts/DMSans-Regular.ttf'),
+  'dm-bold': require('../assets/fonts/DMSans-Bold.ttf'),
+  'dm-semibold': require('../assets/fonts/DMSans-SemiBold.ttf'),
+};
 
 const ParticipantScreen = () => {
+  const [isLoaded] = useFonts(customFonts);
+
   const [dropdownSelectedOption, setDropdownSelectedOption] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState(Localization.locale);
 
@@ -43,6 +50,38 @@ const ParticipantScreen = () => {
   const navigation = useNavigation();
   const slideValue = new Animated.Value(0);
   const { languageSelected, setLanguageSelected } = useLanguage();
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  
+  if (!isLoaded) {
+    return null;
+  }
+
+  // const [isLoaded] = useFonts({
+  //   'dm': require('../assets/fonts/DMSans-Regular.ttf'),
+  //   'dm-bold': require('../assets/fonts/DMSans-Bold.ttf'),
+  //   'dm-semibold': require('../assets/fonts/DMSans-SemiBold.ttf'),
+  //   'dm-thin': require('../assets/fonts/DMSans-Thin.ttf'),
+  //   'dm-medium': require('../assets/fonts/DMSans-Medium.ttf'),
+  // });
+
+
+
+
+
+  // useEffect(() => {
+  //   const loadCustomFont = async () => {
+  //     await Font.loadAsync({
+  //       'dm': require('../assets/fonts/DMSans-Regular.ttf'),
+  //       'dm-bold': require('../assets/fonts/DMSans-Bold.ttf'),
+  //       'dm-semibold': require('../assets/fonts/DMSans-SemiBold.ttf'),
+  //     });
+  //     setFontLoaded(true);
+  //   };
+
+  //   loadCustomFont();
+  // }, [])
+
 
 
   const ListOptions = [
@@ -63,15 +102,6 @@ const ParticipantScreen = () => {
     i18n.locale = newLanguage;
   };
 
-  const [isLoaded] = useFonts({
-    'dm': require('../assets/fonts/DMSans-Regular.ttf'),
-    'dm-bold': require('../assets/fonts/DMSans-Bold.ttf'),
-    'dm-semibold': require('../assets/fonts/DMSans-SemiBold.ttf'),
-    'dm-thin': require('../assets/fonts/DMSans-Thin.ttf'),
-    'dm-medium': require('../assets/fonts/DMSans-Medium.ttf'),
-  });
-
-
 
 
 
@@ -84,9 +114,6 @@ const ParticipantScreen = () => {
     }).start();
   };
 
-  if (!isLoaded) {
-    return null;
-  }
 
 
   const menuTranslateX = slideValue.interpolate({
@@ -150,7 +177,7 @@ const ParticipantScreen = () => {
                 </View>
               </TouchableOpacity>
 
-              <Text style={{ fontSize: 20 }}>Race Ready</Text>
+              <Text style={{ fontSize: 20, fontFamily: 'dm-bold' }}>Race Ready</Text>
 
               {/* Profile Icon  */}
               <TouchableOpacity onPress={handleCallPress}>
@@ -182,71 +209,71 @@ const ParticipantScreen = () => {
 
 
             <Text style={{ fontFamily: 'dm-medium', fontSize: 34, marginTop: 20, color: 'white' }}>{i18n.t('Welcome')}</Text>
-            <Text style={{ fontFamily: 'dm', fontSize: 20, color: 'white', marginTop: 10 }}>{i18n.t("Scan and let's get started")}</Text>
+            <Text style={{ fontFamily: 'dm', fontSize: 20, color: 'white', marginTop: 10 }}>Let's get you ready for marathon</Text>
 
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
               {
-                
-                  run ? <Timer /> : (  
-                  
+
+                run ? <Timer /> : (
+
                   <>
-                  <View style={{ width: 320, backgroundColor: 'white', borderRadius: 25, padding: 20, display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', marginLeft: 10, marginRight: 10, marginTop: 30 }}>
-                    <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
-                      <Image
-                        source={require('../assets/kms.png')}
-                        resizeMode="contain"
-                        style={{ width: 25, height: 25, tintColor: 'black' }}
-                      />
-                      <Text style={{ fontSize: 30 }}>5 Kms</Text>
-                    </View>
-                    <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
-                      <Image
-                        source={require('../assets/steps.png')}
-                        resizeMode="contain"
-                        style={{ width: 25, height: 25, tintColor: 'black' }}
-                      />
-                      <Text style={{ fontSize: 30 }}>2000</Text>
-                    </View>
-                    <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
-                      <Image
-                        source={require('../assets/time.png')}
-                        resizeMode="contain"
-                        style={{ width: 25, height: 25, tintColor: 'black' }}
-                      />
-                      <Text style={{ fontSize: 30 }}>20:00</Text>
+                    <View style={{ width: 320, backgroundColor: 'white', borderRadius: 25, padding: 20, display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', marginLeft: 10, marginRight: 10, marginTop: 30 }}>
+                      <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
+                        <Image
+                          source={require('../assets/kms.png')}
+                          resizeMode="contain"
+                          style={{ width: 25, height: 25, tintColor: 'black' }}
+                        />
+                        <Text style={{ fontSize: 30 }}>5 Kms</Text>
+                      </View>
+                      <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
+                        <Image
+                          source={require('../assets/steps.png')}
+                          resizeMode="contain"
+                          style={{ width: 25, height: 25, tintColor: 'black' }}
+                        />
+                        <Text style={{ fontSize: 30 }}>2000</Text>
+                      </View>
+                      <View style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'column' }}>
+                        <Image
+                          source={require('../assets/time.png')}
+                          resizeMode="contain"
+                          style={{ width: 25, height: 25, tintColor: 'black' }}
+                        />
+                        <Text style={{ fontSize: 30 }}>20:00</Text>
+                      </View>
+
                     </View>
 
-                  </View>
-
-                  <TouchableOpacity style={{ marginTop: 30 }} onPress={() => setRun(true)}>
-                    <View style={{
-                      width: 230,
-                      height: 80,
-                      borderRadius: 20,
-                      display: 'flex',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      backgroundColor: 'black'
-                    }}>
-                      <Text style={{ fontSize: 20, color: 'white' }}>Start Running</Text>
-                    </View>
-                  </TouchableOpacity>
-                </>
-              )
+                    <TouchableOpacity style={{ marginTop: 30 }} onPress={() => setRun(true)}>
+                      <View style={{
+                        width: 230,
+                        height: 80,
+                        borderRadius: 20,
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        backgroundColor: 'black'
+                      }}>
+                        <Text style={{ fontSize: 20, color: 'white' }}>Start Running</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </>
+                )
               }
 
             </View>
             <ExploreTopics />
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
-              <Text style={{ color: 'white', fontSize: 30, fontFamily: 'dm-bold' }}>Communities</Text>
+              <Text style={{ color: 'white', fontSize: 30, fontFamily: 'dm' }}>Communities</Text>
               <Text style={{ color: 'white', fontSize: 15, fontFamily: 'dm', textDecorationLine: "underline" }}>{i18n.t('View all')}</Text>
             </View>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-              <TouchableOpacity>
+                <TouchableOpacity>
                   <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginRight: 20, borderRadius: 20, paddingBottom: 10, backgroundColor: '#dcfce7' }}>
                     <Image
                       source={require('../assets/community-2.jpg')}

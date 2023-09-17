@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList } from 'react-native';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage"
+import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBOEylOChTyrlPIQcSZP0Ff9tqrIuUdtwA",
@@ -14,7 +16,9 @@ const firebaseConfig = {
   };
 
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
-const db = firebase.firestore();
-
-export { db };
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app)
+  const auth = getAuth(app)
+  const db = getFirestore(app);
+  
+  export { db, auth, storage };

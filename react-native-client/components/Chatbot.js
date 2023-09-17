@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -30,10 +30,9 @@ export default function Chatbot({ navigation }) {
     
 
   };
-
+  
   const handleAddUserInput = () => {
     setAllMsgs([...allMsgs, { u: userInput }]);
-    setSymptoms([...symptoms, userInput]);
     setUserInput(null);
   };
 
@@ -58,8 +57,6 @@ export default function Chatbot({ navigation }) {
                 user="Rohan"
                 text="Welcome to the biggest line I am going to write today Seems everything is working good"
               />
-
-
 
               {allMsgs.map((value, index) => {
                 console.log(Object.keys(value) == 'u');

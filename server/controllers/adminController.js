@@ -102,7 +102,6 @@ const addNewEvent = async (req, res) => {
     // Save the new event to the database
 =======
     const eventData = req.body;
-    const {} = eventData;
     const newEvent = new Event(eventData);
 >>>>>>> da3b10dc03cd1a80811d8e72828bb5a64690448d
     await newEvent.save();

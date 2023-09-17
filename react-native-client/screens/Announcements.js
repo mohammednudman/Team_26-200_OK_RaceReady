@@ -22,26 +22,23 @@ const ChatScreen = () => {
 
         {/* Explore Topics */}
         <View>
-          <Text style={{ color: 'white', fontFamily: 'dm-bold', fontSize: 30, marginTop: 30, }}>Chats</Text>
+          <Text style={{ color: 'white', fontSize: 30, marginTop: 30, }}>Chats</Text>
         </View>
 
-        <View style={{ marginTop: 40, display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', backgroundColor: 'white', padding: 20, borderRadius: 30, }}>
-          {/* <TouchableOpacity onPress={() => navigation.navigate('Announcements')}> */}
-          <TouchableOpacity>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-       
+        <View style={{ marginTop: 40,  display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', padding: 20, borderRadius: 30, }}>
+          <TouchableOpacity onPress={() => navigation.navigate('Announcements')}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+             
                 <Image
                   source={require('../assets/announcements.png')}
                   resizeMode="contain"
-                  style={{ width: 30, height: 30, marginRight: 30}}
+                  style={{ width: 30, height: 30, }}
                 />
 
               <View>
                 <Text style={{ fontSize: 30 ,fontWeight: 'bold'}}>Announcements</Text>
               </View>
-              </View>
-
-
+            </View>
           </TouchableOpacity>
 
 

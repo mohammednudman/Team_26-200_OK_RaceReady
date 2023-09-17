@@ -14,7 +14,8 @@ import { useLanguage } from '../LanguageContext';
 import { translations } from '../translations';
 import Timer from '../components/Timer';
 import { useMarathonContext } from '../MarathonContext';
-import Events from "../screens/Events"
+import ChatScreen from './ChatScreen';
+import Notifications from '../screens/Notifications';
 
 
 
@@ -37,7 +38,7 @@ const VolunteerScreen = () => {
   const [linkOptions, setLinkOptions] = useState({
     home: true,
     search: false,
-    events: false,
+    notifications: false,
     chats: false
   })
   const navigation = useNavigation();
@@ -235,7 +236,8 @@ const VolunteerScreen = () => {
       </ScrollView>
 
       {linkOptions.search == true && <Search />}
-      {linkOptions.events == true && <Notifications />}
+      {linkOptions.notifications == true && <Notifications />}
+      {linkOptions.chats == true && <ChatScreen />}
 
 
 
@@ -246,7 +248,7 @@ const VolunteerScreen = () => {
           <TouchableOpacity onPress={() => setLinkOptions({
             home: true,
             search: false,
-            events: false,
+            notifications: false,
             chats: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -262,7 +264,7 @@ const VolunteerScreen = () => {
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: true,
-            events: false,
+            notifications: false,
             chats: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -277,22 +279,22 @@ const VolunteerScreen = () => {
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: false,
-            events: true,
+            notifications: true,
             chats: false
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <Image
-                source={require('../assets/events.png')}
+                source={require('../assets/notifications.png')}
                 resizeMode="contain"
-                style={[styles.icon, { tintColor: linkOptions.events == true ? 'blue' : 'black' }]}
+                style={[styles.icon, { tintColor: linkOptions.notifications == true ? 'blue' : 'black' }]}
               />
-              <Text style={{ color: linkOptions.events == true ? 'blue' : 'black' }}>Events</Text>
+              <Text style={{ color: linkOptions.notifications == true ? 'blue' : 'black' }}>Notifications</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setLinkOptions({
             home: false,
             search: false,
-            events: false,
+            notifications: false,
             chats: true
           })}>
             <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
