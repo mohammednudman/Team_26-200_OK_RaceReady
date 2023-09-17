@@ -27,7 +27,27 @@ const getEventById = async (req, res) => {
   }
 };
 
+const getEventByEventName = async (req, res) => {
+  const { eventName } = req.params; // Assuming you're passing eventName as a URL parameter
+
+  try {
+    // Use Mongoose's findOne method to find an event by eventName
+    const event = await Event.findOne({ eventName });
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // If found, return the event as JSON
+    res.status(200).json(event);
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEventById,
+  getEventByEventName,
 };
