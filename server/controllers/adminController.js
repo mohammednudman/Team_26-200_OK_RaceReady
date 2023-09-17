@@ -72,38 +72,39 @@ const getTotalRevenue = async (req, res) => {
 
 const addNewEvent = async (req, res) => {
   try {
-<<<<<<< HEAD
-    // Extract event data from the request body
+    //     // Extract event data from the request body
     const {
       eventName,
-      eventDate,
+      description,
+      eventStartDate,
+      eventEndDate,
       city,
       place,
       startingPoint,
       endingPoint,
       sponsors,
+      organizers,
+      marathonTypes,
       fees,
+
     } = req.body;
 
-    // Create a new Event document
+    //     // Create a new Event document
     const newEvent = new Event({
       eventName,
-      eventDate: new Date(eventDate), // Convert eventDate to a Date object
-      city,
-      place,
+      eventDate: new Date(eventDate),
       startingPoint,
       endingPoint,
+      city,
+      place,
       sponsors,
+      organizers,
       fees,
     });
 
-    console.log(newEvent);
+    //     console.log(newEvent);
 
-    // Save the new event to the database
-=======
-    const eventData = req.body;
-    const newEvent = new Event(eventData);
->>>>>>> da3b10dc03cd1a80811d8e72828bb5a64690448d
+    //     // Save the new event to the database
     await newEvent.save();
 
     res.status(201).json({ message: 'Event added successfully', event: newEvent });
