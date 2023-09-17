@@ -91,11 +91,11 @@ const addParticipantsToEventAttendee = asyncHandler(async (req, res) => {
 });
 
 const updateUserToken = async (req, res) => {
-  const { userID } = req.params;
+  const { userId } = req.params;
   const { token } = req.body;
 
   try {
-    const user = await User.findOne({ _id: userID });
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
