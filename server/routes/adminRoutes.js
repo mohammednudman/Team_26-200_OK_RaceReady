@@ -3,7 +3,9 @@ const adminRouter = express.Router();
 const adminController = require("../controllers/adminController");
 
 adminRouter.route("/total-events").get(adminController.getTotalEventCount);
-
+adminRouter
+  .route("/participants-per-event")
+  .get(adminController.getParticipantsPerEvent);
 adminRouter
   .route("/total-registrations")
   .get(adminController.getTotalRegistrations);
@@ -17,5 +19,8 @@ adminRouter
 adminRouter
   .route("/send-notifications-volunteers")
   .post(adminController.sendNotificationsVolunteers);
+adminRouter
+  .route("/:eventId/add-sponsors")
+  .post(adminController.addSponsorsToEvent);
 
 module.exports = adminRouter;

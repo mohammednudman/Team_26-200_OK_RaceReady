@@ -12,6 +12,36 @@ const getTotalEventCount = async (req, res) => {
   }
 };
 
+const addSponsorsToEvent = async (req, res) => {
+  try {
+    // Get the event ID from the request parameters
+    const { eventId } = req.params;
+
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Extract sponsors data from the request body
+    const { sponsors } = req.body;
+
+    // Add the sponsors to the event's sponsors array
+    event.sponsors.push(...sponsors);
+
+    // Save the updated event document
+    await event.save();
+
+    return res
+      .status(200)
+      .json({ message: "Sponsors added to the event successfully" });
+  } catch (error) {
+    console.error("Error adding sponsors to event:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const getTotalRegistrations = async (req, res) => {
   try {
     const role = "participant";
@@ -139,6 +169,24 @@ const sendNotificationsVolunteers = async (req, res) => {
   }
 };
 
+const getParticipantsPerEvent = async (req, res) => {
+  try {
+    // Find all events and populate the 'participants' field with user data
+    const events = await Event.find().populate("participants");
+
+    // Calculate the total number of participants for each event
+    const participantsPerEvent = events.map((event) => ({
+      eventName: event.eventName,
+      totalParticipants: event.participants.length,
+    }));
+
+    res.status(200).json(participantsPerEvent);
+  } catch (error) {
+    console.error("Error fetching participants per event:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getTotalEventCount,
   getTotalRegistrations,
@@ -148,4 +196,6 @@ module.exports = {
   getVolunteers,
   sendNotificationsAll,
   sendNotificationsVolunteers,
+  getParticipantsPerEvent,
+  addSponsorsToEvent,
 };
