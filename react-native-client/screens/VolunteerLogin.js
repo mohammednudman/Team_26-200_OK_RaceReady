@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 import { Button, Image, ScrollView, Text, TextInput, View, TouchableOpacity, Pressable } from 'react-native';
 import hide from "../assets/hide.png"
 import viewButton from "../assets/view.png"
-// import { LoginContext } from '../Contexts/LoginContext';
+import { useUserContext } from '../UserContext'; // Import the custom hook
 
 const VolunteerLogin = () => {
 
@@ -16,9 +16,9 @@ const VolunteerLogin = () => {
     const navigation = useNavigation();
     const [checkUsername, setCheckUsername] = useState(false)
     const [checkpass, setcheckpass] = useState(false)
-    // const { user, setUser } = useContext(LoginContext);
+    const { userId, setUserId } = useUserContext(); // Access userId and setUserId from the context
 
-    const sendDataToServer = async (username, password, email, firstname, lastname, city) => {
+    const sendDataToServer = async (username, password) => {
         try {
             const apiUrl = 'https://4ded-49-248-167-18.ngrok-free.app/api/login/volunteer'; // Replace with your server URL
 
@@ -38,6 +38,14 @@ const VolunteerLogin = () => {
             if (!response.ok) {
                 throw new Error('Server Error');
             }
+            const responseData = await response.json();
+      
+            // Assuming the response contains a 'uid' field
+            const uid = responseData.userId;
+        
+            // Update the user ID in the UserContext
+            setUserId(uid);
+
             setUsername('')
             setPassword('')
             console.log('Logged in successfully');
@@ -49,8 +57,8 @@ const VolunteerLogin = () => {
     };
 
     const Signin = () => {
-        if (username && password && email && firstName && lastName && city) {
-            sendDataToServer(username, password, email, firstName, lastName, city);
+        if (username && password) {
+            sendDataToServer(username, password);
         } else {
             alert("Please fill in all the required fields");
         }
