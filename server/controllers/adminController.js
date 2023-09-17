@@ -72,6 +72,7 @@ const getTotalRevenue = async (req, res) => {
 
 const addNewEvent = async (req, res) => {
   try {
+<<<<<<< HEAD
     // Extract event data from the request body
     const {
       eventName,
@@ -99,6 +100,11 @@ const addNewEvent = async (req, res) => {
     console.log(newEvent);
 
     // Save the new event to the database
+=======
+    const eventData = req.body;
+    const {} = eventData;
+    const newEvent = new Event(eventData);
+>>>>>>> da3b10dc03cd1a80811d8e72828bb5a64690448d
     await newEvent.save();
 
     res.status(201).json({ message: 'Event added successfully', event: newEvent });

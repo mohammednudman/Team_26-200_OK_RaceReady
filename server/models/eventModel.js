@@ -16,12 +16,12 @@ const eventSchema = new mongoose.Schema({
   city: String,
   place: String,
   startingPoint: {
-    latitude: Number,
-    longitude: Number,
+    latitude: String,
+    longitude: String,
   },
   endingPoint: {
-    latitude: Number,
-    longitude: Number,
+    latitude: String,
+    longitude: String,
   },
   firstAidHalts: [
     {
@@ -65,13 +65,27 @@ const eventSchema = new mongoose.Schema({
 
   marathonType: [
     {
-      type: Number
-    }
+      type: Number,
+    },
   ],
+<<<<<<< HEAD
   fees: Number,
 
+=======
+  fees: {
+    type: Number,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  place: {
+    type: String,
+    required: true,
+  },
+>>>>>>> da3b10dc03cd1a80811d8e72828bb5a64690448d
   registrationDeadline: Date,
-
 });
 
 const Event = mongoose.model("Event", eventSchema);
