@@ -23,4 +23,4 @@ mongoose.connection.on("error", (err) => {
 });
 
 // mongoose.debug;
-mongoose.set('debug', true);
+mongoose.set("debug", true);

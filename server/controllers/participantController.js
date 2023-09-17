@@ -31,7 +31,6 @@ const addStopTimeOfHackathon = asyncHandler(async (req, res) => {
   const { userId } = req.params; // Assuming you pass the user's ID in the URL
   const { eventId, marathonType, timestamp } = req.body;
 
-
   try {
     // Find the user by ID
     const user = await User.findById(userId);
@@ -46,7 +45,6 @@ const addStopTimeOfHackathon = asyncHandler(async (req, res) => {
       timestamp: timestamp,
     };
     user.performance.push(newPerformance);
-
 
     // Save the updated user document
     await user.save();
@@ -121,17 +119,29 @@ const getParticipantData = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    let totalTimestamp = 0, totalDistance = 0;
-    participant.performance.forEach(p => {
+    let totalTimestamp = 0,
+      totalDistance = 0;
+    participant.performance.forEach((p) => {
       totalTimestamp += p.timestamp;
       totalDistance += p.distance;
     });
 
     const steps = 1200 * totalDistance;
-    const calorie = 3.9 * participant.weight * totalTimes66666tamp;
+    const calorie = 3.9 * participant.weight * totalTimestamp;
+    const speed = totalDistance / (totalTimestamp / 3600); // Speed in km/h
 
+    // Construct the response JSON with calculated values
+    const responseData = {
+      steps,
+      calorie,
+      speed,
+      totalDistance,
+      totalTimestamp,
+    };
+
+    res.status(200).json(responseData);
   } catch (error) {
-    console.error("Error updating token:", error);
+    console.error("Error retrieving participant data:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -141,4 +151,5 @@ module.exports = {
   addStopTimeOfHackathon,
   updateUserToken,
   addParticipantsToEventParticipants: addParticipantsToEventAttendee,
+  getParticipantData,
 };

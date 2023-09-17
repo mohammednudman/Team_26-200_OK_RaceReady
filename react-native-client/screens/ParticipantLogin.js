@@ -4,7 +4,7 @@ import React, { useState, useContext } from 'react';
 import { Button, Image, ScrollView, Text, TextInput, View, TouchableOpacity, Pressable } from 'react-native';
 import hide from "../assets/hide.png"
 import viewButton from "../assets/view.png"
-// import { LoginContext } from '../Contexts/LoginContext';
+import { useUserContext } from '../UserContext'; // Import the custom hook
 
 const ParticipantLogin = () => {
 
@@ -17,41 +17,53 @@ const ParticipantLogin = () => {
     const [lastName, setLastName] = useState('');
     const [view, setView] = useState(false);
     const navigation = useNavigation();
-    // const { user, setUser } = useContext(LoginContext);
+    const { userId, setUserId } = useUserContext(); 
 
 
-    const sendDataToServer = async (username, password, email, firstname, lastname, city) => {
+    const sendDataToServer = async (username, password) => {
         try {
-            const apiUrl = 'https://4ded-49-248-167-18.ngrok-free.app/api/login/participant'; // Replace with your server URL
-
-            const requestBody = {
-                username,
-                password,
-            };
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (!response.ok) {
-                throw new Error('Server Error');
-            }
-            setUsername('')
-            setPassword('')
-            console.log('Logged in successfully');
-            navigation.navigate('Participant Screen')
+          const apiUrl = 'https://4ded-49-248-167-18.ngrok-free.app/api/login/participant'; // Replace with your server URL
+      
+          const requestBody = {
+            username,
+            password,
+          };
+      
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });
+      
+          if (!response.ok) {
+            throw new Error('Server Error');
+          }
+      
+          const responseData = await response.json();
+      
+          // Assuming the response contains a 'uid' field
+          const uid = responseData.userId;
+      
+          // Update the user ID in the UserContext
+          setUserId(uid);
+      
+          setUsername('');
+          setPassword('');
+          alert('Logged in successfully');
+          navigation.navigate('PStarter1');
         } catch (error) {
-            console.error('Error sending data to the server:', error);
+          console.error('Error sending data to the server:', error);
         }
-    };
+      };
+      
 
     const Signin = () => {
-        if (username && password && email && firstName && lastName && city) {
-            sendDataToServer(username, password, email, firstName, lastName, city);
+
+
+        if (username && password) {
+            sendDataToServer(username, password);
         } else {
             alert("Please fill in all the required fields");
         }
