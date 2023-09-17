@@ -31,12 +31,34 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  performance: [
+    {
+      eventId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+      },
+      marathonType: {
+        type: Number
+      },
+      timestamp: {
+        type: Number
+      }
+    }
+  ],
+  token: {
+    type: String
+  },
   role: {
     type: String,
     required: true,
   },
-  bmi: Number,
-  timestamps: [{ type: Date }],
+  weight: {
+    type: Number
+  },
+  height: {
+    type: Number
+  },
+  bmi: Number
 });
 
 const User = mongoose.model("User", userSchema);

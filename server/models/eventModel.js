@@ -30,7 +30,6 @@ const eventSchema = new mongoose.Schema({
       },
     },
   ],
-
   refreshmentHalts: [
     {
       type: String,
@@ -41,14 +40,18 @@ const eventSchema = new mongoose.Schema({
     },
   ],
   description: String,
-  participants:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'User'
-  },
-  volunteers:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'User'
-  },
+  participants: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  volunteers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   organizer: {
     type: String,
   },
@@ -57,7 +60,15 @@ const eventSchema = new mongoose.Schema({
       type: String,
     },
   ],
+
+  marathonType: [
+    {
+      type: Number
+    }
+  ],
+
   registrationDeadline: Date,
+
 });
 
 const Event = mongoose.model("Event", eventSchema);
