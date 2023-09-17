@@ -60,7 +60,6 @@ const getTotalRevenue = async (req, res) => {
 const addNewEvent = async (req, res) => {
   try {
     const eventData = req.body;
-    const {} = eventData;
     const newEvent = new Event(eventData);
     await newEvent.save();
     res.status(201).json({ message: "Event added successfully" });
