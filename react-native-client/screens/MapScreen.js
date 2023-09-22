@@ -10,7 +10,7 @@ const B_LATITUDE = 19.088207;
 const R_LATITUDE = 19.090000;
 const B_LONGITUDE = 72.882854;
 const R_LONGITUDE = 72.882854;
-const GOOGLE_MAPS_API_KEY = 'AIzaSyDbiZm8dDE5UgW47gppJI9GU_bDCq-Ivp8';
+const GOOGLE_MAPS_API_KEY = '';
 
 // Define hardcoded refreshment markers along the path
 const refreshmentMarkers = [
